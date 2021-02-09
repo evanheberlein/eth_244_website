@@ -1,0 +1,90 @@
+---
+title: CV
+name: Evan
+surname: T. Heberlein
+position: "Santa Barbara, CA"
+address: "Bren School of Environmental Science & Management"
+phone: +1 651-788-3523
+email: "ese@ucsb.edu"
+github: evanheberlein
+linkedin: evanheberlein
+date: "`r format(Sys.time(), '%B %Y')`"
+aboutme: "Evan is a master's student in Environmental Science and Management living in Santa Barbara, CA"
+output: 
+  vitae::markdowncv:
+    theme: kjhealy
+
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(vitae)
+```
+
+
+## Education
+
+```{r}
+library(tibble)
+tribble(
+  ~ Degree, ~ Year, ~ Institution, ~ Where,
+  "Biology & Environmental Studies", "2016", "Whitman College", "Walla Walla, WA",
+  "Master of Environmental Science and Management", "2021", "Bren School", "UC - Santa Barbara"
+) %>% 
+  detailed_entries(Degree, Year, Where, Institution)
+```
+
+
+## Grants, Scholarships & Fellowships
+
+```{r}
+tribble(
+  ~ Institution, ~ Award, ~ Year, ~ Amount,
+  "Whitman College", "Stephen Penrose Merit Scholarship", "2012-2016", "$36,000",
+  "Whitman College", "Whitman Community Fellowship", "2015-2016", "$5,400",
+  "Bren School", "Sea Forward Fund Summer Internship Fellowship", "2020", "$1,750",
+  "Bren School", "Sustainable Water Markets Fellowship", "2020-2021", "$15,783"
+) %>% 
+  detailed_entries(Institution, Year, Amount, Award)
+```
+
+## Research Experience
+
+```{r}
+tribble(
+  ~ Institution, ~ Title, ~ Year, ~Info,
+  "Earth Research Institute", "WAVES Lab Intern", "7/20-present", "ERI",
+  "Bren School Group Project", "Co-Data Manager & Editor", "4/20-present", "thesis equivalent",
+  "Costa Humboldt", "MCAIP Intern", "4/20-9/20", "Santiago, Chile",
+  "Environmental Market Solutions Lab", "Urban Geospatial Intern", "1/20-6/20", "emLab",
+  "Lake Superior National Estuarine Research Reserve", "Research Consultant", "9/16-7/17", "UW - Superior",
+  "Kooskooskie Commons", "Whitman Community Fellow", "9/15-5/16", "Walla Walla, WA",
+  "Cedar Creek Ecosystem Science Reserve", "Plant Community Ecology Intern", "6/15-8/15", "University of Minnesota",
+  "Cape Cod National Seashore", "Aquatic Ecology & Shorebird Monitoring Intern", "6/14-8/14", "undergraduate thesis research",
+  "School for Field Studies", "Directed Research - Riparian Water Quality", "11-12/13", "Kimana, Kenya"
+) %>% 
+detailed_entries(Institution, Year, Info, Title)
+```
+
+## Professional Consulting Experience
+```{r}
+tribble(
+  ~ Institution, ~ Title, ~ Year, ~Info,
+  "Terracon Consultants", "Assistant Scientist", "4/18-4/20", "St. Paul, MN & Orange Co., CA",
+  "Sustainable Living Center", "Technical Outreach Coordinator", "9/14-5/15", "$mart Business Partner program"
+) %>% 
+detailed_entries(Institution, Year, Info, Title)
+```
+
+## Teaching Experience
+```{r}
+tribble(
+  ~ Institution, ~ Title, ~ Year, ~Department,
+  "UC - Santa Barbara", "Teaching Assistant", "1/20-6/21", "Sociology, Geography, Black Studies, Environmental Science",
+  "Whitman College", "Teaching Assistant", "1/16-5/16", "Plant Physiology Lab"
+) %>% 
+detailed_entries(Institution, Year, Department, Title)
+```
+
+

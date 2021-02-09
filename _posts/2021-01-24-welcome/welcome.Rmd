@@ -1,7 +1,7 @@
 ---
 title: "welcome"
 description: |
-  A short description of the post.
+  My first post.
 author:
   - name: Unknown
 date: 01-24-2021
