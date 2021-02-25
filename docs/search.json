@@ -6,28 +6,28 @@
       "description": "Some additional details about the website",
       "author": [],
       "contents": "\r\n\r\n\r\n\r\n",
-      "last_modified": "2021-02-25T13:08:08-08:00"
+      "last_modified": "2021-02-25T14:30:45-08:00"
     },
     {
       "path": "blog.html",
       "title": "Blog",
       "author": [],
       "contents": "\r\n\r\n\r\n\r\n",
-      "last_modified": "2021-02-25T13:08:11-08:00"
+      "last_modified": "2021-02-25T14:30:46-08:00"
     },
     {
       "path": "index.html",
       "title": "Evan T. Heberlein",
       "author": [],
       "contents": "\r\n\r\n          \r\n          \r\n          ESTH\r\n          \r\n          \r\n          Home\r\n          Blog\r\n          CV\r\n          Portfolio\r\n          ☰\r\n          \r\n          \r\n      \r\n        \r\n          \r\n            Evan T. Heberlein\r\n          \r\n          \r\n            \r\n              I am a master’s student at the Bren School of Environmental Science & Management at UC - Santa Barbara studying Water Resources Management, Coastal & Marine Resources Management, and Environmental Data Science. My academic interests include hydrology, coastal geomorphology, remote sensing, and environmental justice. I have a bachelor’s degree in Biology & Environmental Studies from Whitman College in Walla Walla, WA. In my free time I enjoy cooking, reading, listening to music, and spending time in nature.\r\n            \r\n            \r\n              I am a master’s student at the Bren School of Environmental Science & Management at UC - Santa Barbara studying Water Resources Management, Coastal & Marine Resources Management, and Environmental Data Science. My academic interests include hydrology, coastal geomorphology, remote sensing, and environmental justice. I have a bachelor’s degree in Biology & Environmental Studies from Whitman College in Walla Walla, WA. In my free time I enjoy cooking, reading, listening to music, and spending time in nature.\r\n            \r\n          \r\n\r\n          \r\n            \r\n              \r\n                  \r\n                    \r\n                      LinkedIn\r\n                    \r\n                  \r\n                \r\n                                \r\n                  \r\n                    \r\n                      GitHub\r\n                    \r\n                  \r\n                \r\n                                \r\n                  \r\n                    \r\n                      Email\r\n                    \r\n                  \r\n                \r\n                              \r\n          \r\n\r\n          \r\n            \r\n              \r\n                                \r\n                  \r\n                    LinkedIn\r\n                  \r\n                \r\n                                \r\n                  \r\n                    GitHub\r\n                  \r\n                \r\n                                \r\n                  \r\n                    Email\r\n                  \r\n                \r\n                              \r\n            \r\n          \r\n        \r\n      \r\n    \r\n\r\n    \r\n    \r\n    ",
-      "last_modified": "2021-02-25T13:08:11-08:00"
+      "last_modified": "2021-02-25T14:30:46-08:00"
     },
     {
       "path": "portfolio.html",
       "title": "Portfolio",
       "author": [],
-      "contents": "\r\nAdvanced Data Analysis\r\n\r\n\r\n\r\nChloropleth map of total inland (non-marine) oil spills by county in California in 2008\r\nRhone Ecohydrology\r\nForests to Faucets\r\n\r\n\r\n\r\n",
-      "last_modified": "2021-02-25T13:08:48-08:00"
+      "contents": "\r\nAdvanced Data Analysis\r\nCartography in R\r\n\r\n\r\n\r\nChloropleth map of total inland (non-marine) oil spills by county in California in 2008 (from https://map.dfg.ca.gov/metadata/ds0394.html)\r\n\r\n\r\n\r\nCetacean species richness for the Southern California Bight and surrounding areas of the Eastern Pacific Ocean. Species abundance was calculated based on a presence threshold probability of 0.6, and rasters for all 35 species were aggregated after values over 0.6 were coerced to 1 (and values under 0.6 to 0). Highest species abundance value shown is 28 species (dark blue)\r\nText Analysis\r\n\r\n\r\n\r\nPrevalence of words “war” (afinn sentiment -2) and “peace” (afinn sentiment 2) by chapter in War and Peace\r\nRhone Ecohydrology\r\nForests to Faucets\r\nCetacean data citation: Kaschner, K., Rius-Barile, J., Kesner-Reyes, K., Garilao, C., Kullander, S., Rees, T., & Froese, R. (2016). AquaMaps: Predicted range maps for aquatic species. www.aquamaps.org\r\nAnalyzed text citation: Tolstoy, Leo. War and Peace. Walter Scott Pub. Co., 1920. https://www.planetebook.com/free-ebooks/war-and-peace.pdf\r\n\r\n\r\n\r\n",
+      "last_modified": "2021-02-25T14:31:59-08:00"
     }
   ],
   "collections": ["posts/posts.json"]

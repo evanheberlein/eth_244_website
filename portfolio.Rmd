@@ -1,15 +1,26 @@
 ---
 title: "Portfolio"  # any name you want here
-listing: posts # do this exactly
 ---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
 
-## Advanced Data Analysis
-
-```{r 244, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(here)
 library(sf)
 library(janitor)
+library(raster)
+library(rnaturalearth)
+library(rnaturalearth)
+library(tidytext)
+library(textdata)
+library(pdftools)
+```
+
+# Advanced Data Analysis
+
+## Cartography in R
+
+```{r 244 oil spills, echo=FALSE, message=FALSE, warning=FALSE}
 
 ca_counties <- read_sf(here("data","ca_counties","CA_Counties_TIGER2016.shp"))
 ca_oil_spills <- read_sf(here("data","ca_oil_spills",
@@ -37,9 +48,122 @@ ggplot(data = ca_spill_counts) +
   scale_x_continuous(expand = c(0,0)) +
   scale_y_continuous(expand = c(0,0))
 ```
-*Chloropleth map of total inland (non-marine) oil spills by county in California in 2008*
+*Chloropleth map of total inland (non-marine) oil spills by county in California in 2008 (from https://map.dfg.ca.gov/metadata/ds0394.html)*
+
+```{r 244 cetacean raster, message=FALSE, warning=FALSE, include=FALSE}
+# Create list of all cetacean rasters
+cetacean_rasters <- list.files(
+  here("data/ca_cetaceans"),
+  full.names = TRUE
+)
+
+# Stack all rasters
+cetacean_stack <- stack(cetacean_rasters)
+
+# Write function to filter for presence threshold of 0.6
+cetacean_filter <- function(x, thresh = .6){
+  y <- ifelse(x >= thresh, 1, NA)
+  return(y)
+}
+
+# Apply filter function to raster stack
+cetacean_filtered <- calc(cetacean_stack, fun = cetacean_filter)
+
+# Calculate total species numbers per raster cell
+cetacean_sum <- calc(cetacean_filtered, fun = sum, na.rm = TRUE)
+
+# Read in coastal outline from natural earth
+pacific_coast <- ne_download(scale = 110, type = 'countries', category = 'cultural', returnclass = 'sf')
+
+# Convert raster to df
+cetacean_df <- raster::rasterToPoints(cetacean_sum) %>%
+  as.data.frame()
+
+# Create final figure
+cetacean_fig <- ggplot() +
+  geom_raster(data = cetacean_df, 
+                       aes(x = x, y = y, fill = layer)) +
+  geom_sf(data = pacific_coast, fill = "black", color = "gray") +
+  coord_sf(expand= 0, xlim = c(-125, -115), ylim = c(32, 38)) +
+  labs(x = "Longitude", y = "Latitude", fill = "Species richness (n)") +
+  theme(legend.position = "bottom") +
+  scale_fill_gradient(low = "red", high = "blue")
+```
+
+```{r fig, echo=FALSE, message=FALSE, warning=FALSE}
+cetacean_fig
+```
+*Cetacean species richness for the Southern California Bight and surrounding areas of the Eastern Pacific Ocean. Species abundance was calculated based on a presence threshold probability of **0.6**, and rasters for all 35 species were aggregated after values over 0.6 were coerced to 1 (and values under 0.6 to 0). Highest species abundance value shown is 28 species (dark blue)*
+
+## Text Analysis
+
+```{r tolstoy, echo=FALSE, message=FALSE, warning=FALSE}
+# Read in & tidy text
+tolstoy_text <- pdf_text(here("data/war-and-peace.pdf"))
+
+tolstoy_tidy <- data.frame(tolstoy_text) %>% 
+  mutate(text_full = str_split(tolstoy_text, pattern = '\\r\n')) %>% 
+  unnest(text_full) %>% 
+  mutate(text_full = str_trim(text_full))
+
+# Sort data frame by chapter
+tolstoy_df <- tolstoy_tidy %>% 
+  slice(-(1:12)) %>% 
+  mutate(chapter = case_when(
+    str_detect(text_full, "Chapter") ~ text_full,
+    TRUE ~ NA_character_
+  )) %>% 
+  fill(chapter) %>% 
+  separate(col = chapter, into = c("ch", "no"), sep = " ") %>% 
+  mutate(chapter = as.numeric(as.roman(no)))
+
+# Isolate words using tokens
+tolstoy_tokens <- tolstoy_df %>% 
+  unnest_tokens(word, text_full) %>% 
+  #select(-tolstoy_text) %>% 
+  filter(is.na(as.numeric(word)))
+
+# Remove stop words
+tolstoy_nonstop_words <- tolstoy_tokens %>% 
+  anti_join(stop_words)
+
+# Word count by chapter
+nonstop_counts <- tolstoy_nonstop_words %>% 
+  count(chapter, word)
+
+nonstop_counts_wp <- nonstop_counts %>% 
+  filter(word == "war" | word == "peace") %>% 
+  mutate(n = as.numeric(n)) %>% 
+  mutate(word = as.factor(word))
+
+war_or_peace <- nonstop_counts_wp %>% 
+  group_by(chapter) %>% 
+  pivot_wider(names_from = word,
+               values_from = n) %>% 
+  mutate(chapter = as.numeric(chapter))
+
+ggplot() +
+  geom_line(data = war_or_peace, size = 2,
+            aes(x = chapter, y = war, color = "War")) + 
+  geom_line(data = war_or_peace, size = 2,
+            aes(x = chapter, y = peace, color = "Peace")) +
+  theme_minimal() +
+  ggtitle("War and Peace in War and Peace") +
+  labs(x = "Chapter", y = "Word count", color = "Word") +
+  scale_x_continuous(expand = c(0,0), limits = c(1, 39), breaks = seq(from = 0,
+                                                                      to = 39,
+                                                                      by = 3)) +
+  scale_y_continuous(expand = c(0,0)) +
+  scale_color_manual(values=c("light blue", "red"))
+```
+
+*Prevalence of words "war" (`afinn` sentiment -2) and "peace" (`afinn` sentiment 2) by chapter in *War and Peace 
 
 
-## Rhone Ecohydrology
+# Rhone Ecohydrology
 
-## Forests to Faucets
+# Forests to Faucets
+
+Cetacean data citation: *Kaschner, K., Rius-Barile, J., Kesner-Reyes, K., Garilao, C., Kullander, S., Rees, T., & Froese, R. (2016). AquaMaps: Predicted range maps for aquatic species. www.aquamaps.org*
+
+Analyzed text citation: *Tolstoy, Leo. War and Peace. Walter Scott Pub. Co., 1920. https://www.planetebook.com/free-ebooks/war-and-peace.pdf*
