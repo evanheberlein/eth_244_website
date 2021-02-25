@@ -1,0 +1,45 @@
+---
+title: "Portfolio"  # any name you want here
+listing: posts # do this exactly
+---
+
+## Advanced Data Analysis
+
+```{r 244, echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(here)
+library(sf)
+library(janitor)
+
+ca_counties <- read_sf(here("data","ca_counties","CA_Counties_TIGER2016.shp"))
+ca_oil_spills <- read_sf(here("data","ca_oil_spills",
+                              "Oil_Spill_Incident_Tracking_%5Bds394%5D.shp")) %>% 
+  clean_names()
+
+# Filter for inland oil spills only
+ca_oil_spills_inland <- ca_oil_spills %>% 
+  filter(inlandmari == "Inland")
+
+# Combining spatial layers
+ca_combo <- ca_counties %>% 
+  st_join(ca_oil_spills_inland)
+
+# Count spills by county
+ca_spill_counts <- ca_combo %>% count(localecoun)
+  
+# Create final chloropleth
+ggplot(data = ca_spill_counts) +
+  geom_sf(aes(fill = n), color = "black", size = 0.1) +
+  scale_fill_gradientn(colors = c("light green","orange","red","black")) +
+  labs(x = "Longitude", y = "Latitude", fill = "Oil spills (n)") +
+  theme_minimal() +
+  theme(legend.position = "bottom") +
+  scale_x_continuous(expand = c(0,0)) +
+  scale_y_continuous(expand = c(0,0))
+```
+*Chloropleth map of total inland (non-marine) oil spills by county in California in 2008*
+
+
+## Rhone Ecohydrology
+
+## Forests to Faucets
